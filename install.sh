@@ -54,4 +54,4 @@ pacman -S --noconfirm grub efibootmgr # installs grub and efibootmgr
 grub-install --target=x86_64-efi --efi-directory=/boot/efi # installs grub as the bootloader
 grub-mkconfig -o /boot/grub/grub.cfg # makes the config file for grub
 exit # exit out of the filesystem
-reboot # reboots the system
+# reboot # reboots the system
