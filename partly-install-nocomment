@@ -1,0 +1,22 @@
+timedatectl set-ntp true
+sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 5/g' /etc/pacman.conf
+pacstrap /mnt base base-devel linux linux-firmware 
+genfstab -U /mnt >> /mnt/etc/fstab 
+arch-chroot /mnt 
+hwclock --systohc 
+sed -i 's/#en_US.UTF-8/en_US.UTF-8/g' /etc/locale.gen 
+locale-gen # regenerates the locale file
+echo 'KEYMAP=no-latin1' >> /etc/vconsole.conf 
+echo 'arch-test' > /etc/hostname 
+echo '127.0.0.1 localhost' > /etc/hosts
+echo '::1 localhost' >> /etc/hosts 
+echo '127.0.0.1 arch-test.localdomain arch-test' >> /etc/hosts  
+pacman -S --noconfirm networkmanager 
+systemctl enable NetworkManager 
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | passwd 
+    root 
+    root 
+EOF
+pacman -S --noconfirm grub efibootmgr 
+grub-install --target=x86_64-efi --efi-directory=/boot/efi 
+grub-mkconfig -o /boot/grub/grub.cfg 
