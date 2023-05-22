@@ -32,10 +32,10 @@ mkdir /mnt/boot # make dir for EFI
 mkdir /mnt/boot/efi # make dir for EFI
 mount /dev/sda1 /mnt/boot/efi # mount the EFI partition to the EFI directory
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 5/g' /etc/pacman.conf # enables parallel downloads
-pacstrap /mnt base base-devel linux linux-firmware # installs the base components of Linux
-genfstab -U /mnt >> /mnt/etc/fstab # generates the fstab file with UUIDs
 mkdir /mnt/root
 curl -L https://raw.githubusercontent.com/oyvindhaugen/arch-vm-test/main/install_newshell.sh -o /mnt/root/part2.sh
 chmod +x /mnt/root/part2.sh
+pacstrap /mnt base base-devel linux linux-firmware # installs the base components of Linux
+genfstab -U /mnt >> /mnt/etc/fstab # generates the fstab file with UUIDs
 arch-chroot /mnt ./root/part2.sh # enter the filesystem in the /mnt directory
 #reboot # reboots the system
